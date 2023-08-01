@@ -7,11 +7,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
-    
-    
     @IBOutlet weak var searchTextField: UITextField!
     
     
+    var weatherManager = WeatherManager()
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true) // dismiss keyboard
@@ -37,6 +36,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        // textfield trigger these methods, any txtfd can trigger below action if not specified
         if textField.text != ""{
             return true
         }else{
@@ -46,7 +46,12 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let city = searchTextField.text{
+            weatherManager.fetchWeather(cityName: city)
+        }
+        
         searchTextField.text = ""
+        
     }
 
 
